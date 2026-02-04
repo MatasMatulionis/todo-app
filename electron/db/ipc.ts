@@ -1,0 +1,26 @@
+import { ipcMain } from "electron";
+import * as Items from "./items";
+import * as Lists from "./lists";
+
+type TableModule = {
+  tableName: string;
+  initTable(): void;
+  getAll: (...args: any[]) => any[];
+  add(...args: any[]): void;
+};
+
+const tables: TableModule[] = [Items, Lists];
+
+export function initAllTablesAndIPC() {
+  tables.forEach((table) => {
+    table.initTable();
+
+    ipcMain.handle(`${table.tableName}:get`, (_, ...args: any[]) =>
+      table.getAll(...args),
+    );
+
+    ipcMain.handle(`${table.tableName}:add`, (_, ...args: any[]) =>
+      table.add(...args),
+    );
+  });
+}
