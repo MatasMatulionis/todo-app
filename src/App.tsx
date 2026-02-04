@@ -1,11 +1,11 @@
-import { useEffect } from "react";
+import Menu from "./Components/Menu/Menu";
 
 function App() {
-  useEffect(() => {
-    window.api.ping().then(console.log);
-  }, []);
-
-  return <div>Electron + React</div>;
+  return (
+    <>
+      <Menu />
+    </>
+  );
 }
 
 export default App;

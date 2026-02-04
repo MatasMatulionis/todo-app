@@ -1,0 +1,74 @@
+aside {
+  background-color: var(--green-3);
+  height: calc(100vh - 4 * var(--preferred-margin));
+  width: 300px;
+  padding: var(--preferred-margin);
+  border-radius: var(--round-radius);
+
+  .single-row-spaced-out {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .list {
+    margin-top: calc(var(--preferred-margin) * 2);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    button {
+      height: 34px;
+      cursor: pointer;
+      border-radius: var(--round-radius);
+      border: none;
+      transition-duration: var(--medium-transition);
+      background-color: transparent;
+      font-size: var(--medium-text-size);
+      width: 100%;
+      padding: 0px 0px 0px var(--preferred-margin);
+      margin: 1px 0px;
+
+      &:hover {
+        background-color: var(--green-4);
+      }
+
+      display: flex;
+      align-items: center;
+
+      .icon {
+        display: flex;
+        justify-content: right;
+        gap: var(--preferred-margin);
+        align-items: center;
+        margin-left: auto;
+        width: 100%;
+        height: 100%;
+
+        span {
+          height: 100%;
+          aspect-ratio: 1 / 1;
+          border-radius: var(--round-radius);
+          background-color: rgba(var(--black-rgb), 0.5);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .missed {
+          background-color: #750e0e !important;
+          font-weight: 700;
+        }
+      }
+    }
+
+    .color {
+      height: 12px;
+      width: 12px;
+
+      border-radius: calc(4px);
+      margin-right: var(--preferred-margin);
+    }
+  }
+}
