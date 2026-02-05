@@ -1,13 +1,30 @@
+import { useEffect, useState } from "react";
+import Icon from "../../common/Icon";
+import Trash from "../../assets/icons/trash-bin.svg";
+
 import "./styles.scss";
 
 const Menu = () => {
+  const [lists, setLists] = useState<any[]>([]);
+
+  useEffect(() => {
+    window.electronAPI.getLists().then(setLists);
+  }, []);
+  //JSON.stringify(list)
+
+  // const handleAddList = async () => {
+  //   // call Electron API to add list
+  //   await window.electronAPI.addList("New task", "#27a337");
+  // };
+
   return (
     <aside>
+      {/* <p>Testas: {JSON.stringify(lists)}</p> */}
       <section className="single-row-spaced-out">
         <h1>Menu</h1>
         {/* <button className="">{`fix me`}</button> */}
       </section>
-      <section className="list">
+      <section className="task">
         <h2>TASKS</h2>
         <button>
           <p>Today</p>
@@ -29,18 +46,18 @@ const Menu = () => {
       </section>
       <section className="list">
         <h2>LISTS</h2>
-        <button>
-          <div className="color" style={{ backgroundColor: "red" }} />
-          <p>Work</p>
-        </button>
-        <button>
-          <div className="color" style={{ backgroundColor: "green" }} />
-          <p>Gaming</p>
-        </button>
-        <button>
-          <div className="color" style={{ backgroundColor: "blue" }} />
-          <p>Studying</p>
-        </button>
+        {lists.map((list, index) => (
+          <button key={index}>
+            <div className="color" style={{ backgroundColor: list.color }} />
+            <p>{list.title}</p>
+            <button className="options margin-left">
+              <Icon name={"edit"} />
+            </button>
+            <button className="options">
+              <Icon name={"trash"} />
+            </button>
+          </button>
+        ))}
       </section>
     </aside>
   );

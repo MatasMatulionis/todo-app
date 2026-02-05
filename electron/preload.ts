@@ -1,8 +1,23 @@
 import { contextBridge, ipcRenderer } from "electron";
 
-contextBridge.exposeInMainWorld("api", {
-  get: (table: string, ...args: any[]) =>
-    ipcRenderer.invoke(`${table}:get`, ...args),
-  add: (table: string, ...args: any[]) =>
-    ipcRenderer.invoke(`${table}:add`, ...args),
+contextBridge.exposeInMainWorld("electronAPI", {
+  getLists: () => ipcRenderer.invoke("lists:get"),
+  addList: (title: string, color: string) =>
+    ipcRenderer.invoke("lists:add", title, color),
+  getItems: (listId: number) => ipcRenderer.invoke("items:get", listId),
+  addItem: (
+    title: string,
+    description: string,
+    priority: string,
+    status: string,
+    listId: number,
+  ) =>
+    ipcRenderer.invoke(
+      "items:add",
+      title,
+      description,
+      priority,
+      status,
+      listId,
+    ),
 });

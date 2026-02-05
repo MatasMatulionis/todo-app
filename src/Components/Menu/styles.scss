@@ -12,13 +12,14 @@ aside {
     align-items: center;
   }
 
-  .list {
+  .list,
+  .task {
     margin-top: calc(var(--preferred-margin) * 2);
     display: flex;
     flex-direction: column;
     align-items: start;
 
-    button {
+    > button {
       height: 34px;
       cursor: pointer;
       border-radius: var(--round-radius);
@@ -32,6 +33,10 @@ aside {
 
       &:hover {
         background-color: var(--green-4);
+
+        .options {
+          opacity: 1;
+        }
       }
 
       display: flex;
@@ -42,7 +47,6 @@ aside {
         justify-content: right;
         gap: var(--preferred-margin);
         align-items: center;
-        margin-left: auto;
         width: 100%;
         height: 100%;
 
@@ -69,6 +73,33 @@ aside {
 
       border-radius: calc(4px);
       margin-right: var(--preferred-margin);
+    }
+  }
+
+  .options {
+    cursor: pointer;
+    opacity: 0;
+    background-color: transparent;
+    width: auto;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border: none;
+    border-radius: var(--round-radius);
+    transition-duration: var(--medium-transition);
+
+    > * {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    &:hover > * {
+      filter: brightness(70%);
+    }
+
+    &.margin-left {
+      margin-left: auto;
     }
   }
 }
