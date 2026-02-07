@@ -1,6 +1,10 @@
 import Trash from "../assets/icons/trash-bin.svg";
 import DotsHorizontal from "../assets/icons/dots-horizontal.svg";
 import Edit from "../assets/icons/edit.svg";
+import Plus from "../assets/icons/plus.svg";
+import Arrowleft from "../assets/icons/arrow-left-from-line.svg";
+
+import "./icon.scss";
 
 type IconProps = {
   name: string;
@@ -10,6 +14,8 @@ const icons: Record<string, string> = {
   trash: Trash,
   dotsH: DotsHorizontal,
   edit: Edit,
+  plus: Plus,
+  arrowLwL: Arrowleft,
 };
 
 const Icon = ({ name }: IconProps) => {
@@ -19,7 +25,7 @@ const Icon = ({ name }: IconProps) => {
     return null;
   }
 
-  return <img src={src} alt={`${name} icon`} />;
+  return <img className="icon" src={src} alt={`${name} icon`} />;
 };
 
 export default Icon;

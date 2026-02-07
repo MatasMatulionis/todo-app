@@ -24,3 +24,7 @@ export function add(title: string, color?: string) {
     color ?? "#ffffff",
   );
 }
+
+export function remove(id: number) {
+  db.prepare(`DELETE from lists WHERE id = ?`).run(id);
+}

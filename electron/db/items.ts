@@ -38,3 +38,11 @@ export function add(
   `,
   ).run(title, description, listId, priority, status, Date.now());
 }
+
+export function remove(id: number) {
+  db.prepare(
+    `
+    DELETE from tasks WHERE id = ?
+  `,
+  ).run(id);
+}

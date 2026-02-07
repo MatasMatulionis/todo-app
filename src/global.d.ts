@@ -1,6 +1,7 @@
 interface ElectronAPI {
   getLists(): Promise<any[]>;
   addList(title: string, color: string): Promise<void>;
+  deleteList(id: number): Promise<void>;
   getItems(listId: number): Promise<any[]>;
   addItem(
     title: string,
