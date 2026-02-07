@@ -96,6 +96,12 @@ aside {
       align-items: center;
       padding-left: 8px;
 
+      p {
+        max-width: 180px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
       .option {
         opacity: 0;
 

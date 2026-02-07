@@ -14,9 +14,13 @@
   --black: #000000;
   --black-rgb: 0, 0, 0;
   --white: #dad7cd;
-  --green-1: #344e34;
+  --green-1: #507860;
   --green-2: #3e5e4e;
   --green-3: #344e41;
+  --green-4: #161c19;
+
+  --red: #c40000;
+  --gray: #8d8d8d;
 
   --round-radius: 12px;
 
@@ -29,7 +33,7 @@
   --extra-large-text-size: 33px;
   --large-text-size: 26px;
   --medium-text-size: 16px;
-  --small-text-size: 10px;
+  --small-text-size: 13px;
 }
 
 * {

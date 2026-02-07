@@ -1,0 +1,146 @@
+.backdrop {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(var(--black-rgb), 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  width: calc(300px - var(--preferred-margin) * 4);
+  padding: calc(var(--preferred-margin) * 4);
+  background-color: var(--green-3);
+  border-radius: var(--round-radius);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  gap: var(--preferred-margin);
+
+  h1 {
+    margin-bottom: calc(var(--preferred-margin) * 2);
+  }
+
+  input[type="text"] {
+    width: calc(100% - var(--preferred-margin) * 2 - 4px);
+    outline: none;
+    border: 2px var(--white) solid;
+    border-radius: var(--round-radius);
+    background-color: transparent;
+    padding: var(--preferred-margin);
+    font-size: var(--medium-text-size);
+    transition-duration: var(--medium-transition);
+
+    &:focus {
+      border: 2px var(--green-1) solid;
+    }
+
+    &.error-input {
+      border: 2px var(--red) solid;
+    }
+  }
+
+  > div {
+    width: 100%;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+
+    > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+
+      button {
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        outline: none;
+        border: none;
+
+        &:hover {
+          filter: brightness(0.9);
+        }
+
+        &:first-child {
+          border-radius: var(--preferred-margin) 0px 0px var(--preferred-margin);
+        }
+
+        &:last-child {
+          border-radius: 0px var(--preferred-margin) var(--preferred-margin) 0px;
+        }
+      }
+    }
+  }
+
+  > button {
+    width: calc(100% - var(--preferred-margin));
+    cursor: pointer;
+    padding: var(--preferred-margin);
+    font-size: var(--medium-text-size);
+    border-radius: var(--round-radius);
+    border: none;
+    background-color: transparent;
+    transition-duration: var(--medium-transition);
+
+    &.confirm {
+      background-color: var(--green-4);
+
+      &:hover {
+        background-color: var(--green-1);
+      }
+    }
+
+    &:not(.confirm) {
+      box-shadow: inset 0 0 0 2px var(--white);
+
+      &:hover {
+        box-shadow: inset 0 0 0 2px rgb(126, 126, 126);
+      }
+    }
+  }
+
+  a {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .error {
+    width: 100%;
+    text-align: left;
+    color: var(--red);
+    font-size: var(--small-text-size);
+  }
+}
+
+input[type="color"] {
+  border: none;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: var(--preferred-margin);
+  cursor: pointer;
+  background: none; /* ensures the selected color fills the input */
+}
+
+/* WebKit hack to remove inner swatch shadow */
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: var(--preferred-margin);
+}
