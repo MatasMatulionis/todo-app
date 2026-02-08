@@ -6,9 +6,9 @@ interface ElectronAPI {
   addItem(
     title: string,
     description: string,
-    priority: string,
-    status: string,
-    listId: number,
+    priority: numbe | null,
+    status: numbe | null,
+    listId: number | null,
   ): Promise<void>;
 }
 

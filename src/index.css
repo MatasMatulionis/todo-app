@@ -14,12 +14,18 @@
   --black: #000000;
   --black-rgb: 0, 0, 0;
   --white: #dad7cd;
+  --offwhite: #c5c2b8;
   --green-1: #507860;
   --green-2: #3e5e4e;
   --green-3: #344e41;
   --green-4: #161c19;
 
-  --red: #c40000;
+  --orange-1: #da8d22;
+  --orange-2: #d7741d;
+  --orange-3: #ad5100;
+  --orange-4: #6c2000;
+
+  --red: #ff746c;
   --gray: #8d8d8d;
 
   --round-radius: 12px;

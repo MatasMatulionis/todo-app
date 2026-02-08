@@ -1,18 +1,18 @@
 import { db } from "./index";
 
-export const tableName = "items";
+export const tableName = "tasks";
 
 export function initTable() {
   db.prepare(
     `
-    CREATE TABLE IF NOT EXISTS items (
+    CREATE TABLE IF NOT EXISTS tasks (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     description TEXT,
-    priority TEXT,
-    status TEXT,
+    priority INTEGER,
+    status INTEGER,
     created_at INTEGER NOT NULL,
-    list_id INTEGER NOT NULL,
+    list_id INTEGER,
 
     FOREIGN KEY (list_id) REFERENCES lists(id)
     );
@@ -21,15 +21,23 @@ export function initTable() {
 }
 
 export function getAll() {
-  return db.prepare("SELECT * FROM items ORDER BY title ASC").all();
+  return db.prepare("SELECT * FROM tasks ORDER BY title ASC").all();
 }
 
 export function add(
   title: string,
   description: string,
-  priority: string,
-  status: string,
-  listId: number,
+  priority: number | null,
+  status: number | null,
+  percentageDone: number | null,
+  startedAt: number | null,
+  deadlineAt: number | null,
+  streak: number | null,
+  longestStreak: number | null,
+  lastDayStreak: number | null,
+  streakPeriod: number | null,
+  streakGoal: number | null,
+  listId: number | null,
 ) {
   db.prepare(
     `

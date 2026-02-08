@@ -56,7 +56,7 @@ const CreateListModal = ({ onCreate, onClose }: Props) => {
   }
 
   return (
-    <div className="backdrop" onClick={onClose}>
+    <div className="backdrop-list" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h1>CREATE NEW LIST</h1>
         <div>
@@ -66,7 +66,10 @@ const CreateListModal = ({ onCreate, onClose }: Props) => {
             className={error ? "error-input" : ""}
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+              setError(null);
+            }}
             placeholder=""
           />
         </div>

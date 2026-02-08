@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import Icon from "../../common/Icon";
 import CreateListModal from "../Templates/CreateList";
+import CreateTaskModal from "../Templates/CreateTask";
 
 import "./styles.scss";
 
 const Menu = () => {
-  const [openedCreateModal, setOpenedCreateModal] = useState(false);
+  const [openedCreateListModal, setOpenedCreateListModal] = useState(false);
+  const [openedCreateTaskModal, setOpenedCreateTaskModal] = useState(false);
   const [lists, setLists] = useState<any[]>([]);
 
   useEffect(() => {
@@ -14,6 +16,7 @@ const Menu = () => {
 
   //JSON.stringify(list)
 
+  //List
   function getLists() {
     window.electronAPI.getLists().then(setLists);
   }
@@ -28,6 +31,18 @@ const Menu = () => {
     getLists();
   }
 
+  //Task
+  function CreateTask(
+    title: string,
+    description: string,
+    priority: number | null,
+    status: number | null,
+    listId: number | null,
+  ) {
+    window.electronAPI.addItem(title, description, priority, status, listId);
+    // getTasks();
+  }
+
   return (
     <aside>
       <div className="single-row-spaced-out">
@@ -39,7 +54,10 @@ const Menu = () => {
       <section className="task">
         <div className="single-row-spaced-out">
           <h2>TASKS</h2>
-          <button className="icon-button small">
+          <button
+            className="icon-button small"
+            onClick={() => setOpenedCreateTaskModal(true)}
+          >
             <Icon name="plus" />
           </button>
         </div>
@@ -68,7 +86,7 @@ const Menu = () => {
           <h2>LISTS</h2>
           <button
             className="icon-button small"
-            onClick={() => setOpenedCreateModal(true)}
+            onClick={() => setOpenedCreateListModal(true)}
           >
             <Icon name="plus" />
           </button>
@@ -89,13 +107,23 @@ const Menu = () => {
           </div>
         ))}
       </section>
-      {openedCreateModal && (
+      {openedCreateListModal && (
         <CreateListModal
-          onClose={() => setOpenedCreateModal(false)}
+          onClose={() => setOpenedCreateListModal(false)}
           onCreate={(name, color) => {
-            setOpenedCreateModal(false);
+            setOpenedCreateListModal(false);
             CreateList(name, color);
           }}
+        />
+      )}
+      {openedCreateTaskModal && (
+        <CreateTaskModal
+          onClose={() => setOpenedCreateTaskModal(false)}
+          onCreate={(title, description, priority, status, listId) => {
+            setOpenedCreateTaskModal(false);
+            CreateTask(title, description, priority, status, listId);
+          }}
+          lists={lists}
         />
       )}
     </aside>

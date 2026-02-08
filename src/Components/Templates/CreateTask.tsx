@@ -1,0 +1,145 @@
+import { useState, useEffect } from "react";
+import CustomDropdown from "../../common/CustomDropdown";
+
+import "./create_task.scss";
+
+type Props = {
+  onCreate: (
+    title: string,
+    description: string,
+    priority: number | null,
+    status: number | null,
+    listId: number | null,
+  ) => void;
+  onClose: () => void;
+  lists: any[];
+};
+
+const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
+  const [taskType, setTaskType] = useState(false);
+  const [name, setName] = useState("");
+  const [nameError, setNameError] = useState<string | null>(null);
+  const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState<number | null>(0);
+  const [status, setStatus] = useState<number | null>(0);
+  const [listId, setListId] = useState<number | null>(null);
+
+  const STATUSES = [
+    { id: 0, name: "Todo" },
+    { id: 1, name: "In Progress" },
+    { id: 2, name: "Blocked" },
+    { id: 3, name: "Done" },
+  ];
+
+  const PRIORITIES = [
+    { id: 0, name: "None", color: "#545454" },
+    { id: 1, name: "Low", color: "#8ca94a" },
+    { id: 2, name: "Medium", color: "#d2953f" },
+    { id: 3, name: "High", color: "#ad3535" },
+    { id: 4, name: "Extreme", color: "#ad468d" },
+    { id: 5, name: "Critical", color: "#5b4ac9" },
+  ];
+
+  const handleCreate = () => {
+    if (!name.trim()) {
+      setNameError("Title is empty");
+      return;
+    }
+    onCreate(name, description, priority, status, listId);
+  };
+
+  return (
+    <div
+      className={`backdrop-task ${taskType ? "theme-orange" : "theme-green"}`}
+      onClick={onClose}
+    >
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <h1>CREATE NEW TASK</h1>
+        <button
+          onClick={() => setTaskType((e) => !e)}
+          className="special-button"
+        >
+          <span className="text">Timed Task</span>
+          <span className="text">Streak Task</span>
+          <div className={`moving-bg ${taskType}`}></div>
+        </button>
+        <div className="text-field">
+          <h2>Title</h2>
+          {nameError && <span className="error">{nameError}</span>}
+          <input
+            className={nameError ? "error-input" : ""}
+            type="text"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+              setNameError(null);
+            }}
+            placeholder=""
+          />
+        </div>
+
+        <div className="text-field">
+          <h2>Description</h2>
+          <textarea
+            rows={5}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder=""
+          />
+        </div>
+        <div className="row">
+          <div className="custom-select">
+            <h2>List</h2>
+            <CustomDropdown
+              options={lists}
+              value={listId}
+              onChange={setListId}
+              valueKey="id"
+              labelKey="title"
+            />
+          </div>
+
+          <div className="custom-select">
+            <h2>Status</h2>
+            <CustomDropdown
+              options={STATUSES}
+              value={status}
+              onChange={setStatus}
+              valueKey="id"
+              labelKey="name"
+              allowNone={false}
+            />
+          </div>
+        </div>
+
+        <div className="text-field">
+          <h2>Priority</h2>
+          <div className="row priority">
+            {PRIORITIES.map((value, index) => (
+              <button
+                onClick={() => {
+                  setPriority(value.id);
+                }}
+                key={index}
+                style={{ backgroundColor: value.color }}
+                className={value.id === priority ? "active" : ""}
+              >
+                {value.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="row">
+          <button className="submit-button confirm" onClick={handleCreate}>
+            Create
+          </button>
+          <button className="submit-button" onClick={onClose}>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+export default CreateTaskModal;
