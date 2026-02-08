@@ -40,6 +40,13 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
     { id: 5, name: "Critical", color: "#5b4ac9" },
   ];
 
+  const STREAKS = [
+    { id: 0, name: "Day", color: "#d7741d" },
+    { id: 1, name: "Week", color: "#d7741d" },
+    { id: 2, name: "Month", color: "#d7741d" },
+    { id: 3, name: "Year", color: "#d7741d" },
+  ];
+
   const handleCreate = () => {
     if (!name.trim()) {
       setNameError("Title is empty");
@@ -87,48 +94,84 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
             placeholder=""
           />
         </div>
-        <div className="row">
-          <div className="custom-select">
-            <h2>List</h2>
-            <CustomDropdown
-              options={lists}
-              value={listId}
-              onChange={setListId}
-              valueKey="id"
-              labelKey="title"
-            />
-          </div>
+        {!taskType ? (
+          <>
+            <div className="row">
+              <div className="custom-select">
+                <h2>List</h2>
+                <CustomDropdown
+                  options={lists}
+                  value={listId}
+                  onChange={setListId}
+                  valueKey="id"
+                  labelKey="title"
+                />
+              </div>
 
-          <div className="custom-select">
-            <h2>Status</h2>
-            <CustomDropdown
-              options={STATUSES}
-              value={status}
-              onChange={setStatus}
-              valueKey="id"
-              labelKey="name"
-              allowNone={false}
-            />
-          </div>
-        </div>
+              <div className="custom-select">
+                <h2>Status</h2>
+                <CustomDropdown
+                  options={STATUSES}
+                  value={status}
+                  onChange={setStatus}
+                  valueKey="id"
+                  labelKey="name"
+                  allowNone={false}
+                />
+              </div>
+            </div>
 
-        <div className="text-field">
-          <h2>Priority</h2>
-          <div className="row priority">
-            {PRIORITIES.map((value, index) => (
-              <button
-                onClick={() => {
-                  setPriority(value.id);
-                }}
-                key={index}
-                style={{ backgroundColor: value.color }}
-                className={value.id === priority ? "active" : ""}
-              >
-                {value.name}
-              </button>
-            ))}
-          </div>
-        </div>
+            <div className="text-field">
+              <h2>Priority</h2>
+              <div className="row priority">
+                {PRIORITIES.map((value, index) => (
+                  <button
+                    onClick={() => {
+                      setPriority(value.id);
+                    }}
+                    key={index}
+                    style={{ backgroundColor: value.color }}
+                    className={value.id === priority ? "active" : ""}
+                  >
+                    {value.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="text-field">
+              <h2>Streak Period</h2>
+              <div className="row priority">
+                <input className="in-priority" type="number"></input>
+                <h2>time(s) per</h2>
+                {STREAKS.map((value, index) => (
+                  <button
+                    onClick={() => {
+                      setPriority(value.id);
+                    }}
+                    key={index}
+                    style={{ backgroundColor: value.color }}
+                    className={value.id === priority ? "active" : ""}
+                  >
+                    {value.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="row">
+              <div>
+                <h2>Streak Now</h2>
+                <input type="number"></input>
+              </div>
+              <div>
+                <h2>Streak Goal</h2>
+                <input type="number"></input>
+              </div>
+            </div>
+          </>
+        )}
 
         <div className="row">
           <button className="submit-button confirm" onClick={handleCreate}>

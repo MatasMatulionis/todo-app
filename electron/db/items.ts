@@ -30,14 +30,15 @@ export function add(
   priority: number | null,
   status: number | null,
   percentageDone: number | null,
+  listId: number | null,
   startedAt: number | null,
   deadlineAt: number | null,
   streak: number | null,
-  longestStreak: number | null,
-  lastDayStreak: number | null,
+  longestStreak: number | null, //default
+  lastDayStreak: number | null, //default
   streakPeriod: number | null,
+  streakPeriodTimes: number | null,
   streakGoal: number | null,
-  listId: number | null,
 ) {
   db.prepare(
     `

@@ -113,6 +113,31 @@
       }
     }
 
+    input[type="number"]:not(.in-priority) {
+      width: calc(100% - var(--preferred-margin) * 2 - 4px);
+      outline: none;
+      border: 2px var(--white) solid;
+      border-radius: var(--round-radius);
+      background-color: transparent;
+      padding: var(--preferred-margin);
+      font-size: var(--medium-text-size);
+      transition-duration: var(--medium-transition);
+
+      &:focus {
+        border: 2px var(--color-1) solid;
+      }
+
+      &.error-input {
+        border: 2px var(--red-wrong) solid;
+      }
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
     .row {
       width: 100%;
       display: flex;
@@ -174,11 +199,31 @@
 
     .priority {
       width: 100%;
-      height: 25px;
+      height: auto;
+      display: flex;
+
+      .in-priority {
+        outline: none;
+        border: 2px var(--white) solid;
+        border-radius: var(--round-radius);
+        background-color: transparent;
+        padding: var(--preferred-margin);
+        font-size: var(--medium-text-size);
+        transition-duration: var(--medium-transition);
+        text-align: right;
+
+        &:focus {
+          border: 2px var(--color-1) solid;
+        }
+
+        &.error-input {
+          border: 2px var(--red-wrong) solid;
+        }
+      }
 
       button {
         cursor: pointer;
-        width: calc(100% / 6);
+        flex: 1;
         height: 100%;
         outline: none;
         border: none;
