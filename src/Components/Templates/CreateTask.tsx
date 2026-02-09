@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import CustomDropdown from "../../common/CustomDropdown";
+import CustomCalender from "../../common/CustomCalender";
 
 import "./create_task.scss";
 
@@ -22,7 +23,10 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState<number | null>(0);
   const [status, setStatus] = useState<number | null>(0);
+  const [progress, setProgress] = useState<number>(0);
   const [listId, setListId] = useState<number | null>(null);
+  const [startedDay, setStartedDay] = useState<number | null>(null);
+  const [deadlineDay, setDeadlineDay] = useState<number | null>(null);
 
   const STATUSES = [
     { id: 0, name: "Todo" },
@@ -61,6 +65,55 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
       onClick={onClose}
     >
       <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <div className="grid-row">
+          <label className="custom-checkbox">
+            <h2>Start date</h2>
+            <input
+              type="checkbox"
+              onClick={(e) => {
+                (e.target as HTMLInputElement).checked
+                  ? setStartedDay(Date.now())
+                  : setStartedDay(null);
+              }}
+            />
+            <span className="checkmark" />
+          </label>
+          {startedDay !== null ? (
+            <CustomCalender
+              onCreate={(date) => {
+                setStartedDay(date);
+              }}
+              date={startedDay}
+            />
+          ) : (
+            <div className="empty-fill"></div>
+          )}
+        </div>
+        <div className="grid-row">
+          <label className="custom-checkbox">
+            <h2>Deadline date</h2>
+            <input
+              type="checkbox"
+              onClick={(e) => {
+                (e.target as HTMLInputElement).checked
+                  ? setDeadlineDay(Date.now())
+                  : setDeadlineDay(null);
+              }}
+            />
+            <span className="checkmark" />
+          </label>
+          {deadlineDay !== null ? (
+            <CustomCalender
+              onCreate={(date) => {
+                setDeadlineDay(date);
+              }}
+              date={deadlineDay}
+            />
+          ) : (
+            <div className="empty-fill"></div>
+          )}
+        </div>
+
         <h1>CREATE NEW TASK</h1>
         <button
           onClick={() => setTaskType((e) => !e)}
@@ -137,6 +190,21 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
                   </button>
                 ))}
               </div>
+            </div>
+            <div className="full-width">
+              <div className="row between">
+                <h2>Progress</h2>
+                <h2>{progress * 10}%</h2>
+              </div>
+              <input
+                value={progress}
+                onChange={(e) => setProgress(Number(e.target.value))}
+                type="range"
+                id="volume"
+                name="volume"
+                min="0"
+                max="10"
+              />
             </div>
           </>
         ) : (
