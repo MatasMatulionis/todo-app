@@ -32,21 +32,39 @@ const Menu = () => {
   }
 
   //Task
+  function getTasks() {
+    window.electronAPI.getTasks(lists[0].id).then(console.log);
+  }
+
   function CreateTask(
+    mainMode: boolean,
     title: string,
-    description: string,
+    description: string | null,
     priority: number | null,
     status: number | null,
+    progress: number | null,
     listId: number | null,
+    startedAt: number | null,
+    deadlineAt: number | null,
   ) {
-    window.electronAPI.addItem(title, description, priority, status, listId);
+    window.electronAPI.addTask(
+      mainMode,
+      title,
+      description,
+      priority,
+      status,
+      progress,
+      listId,
+      startedAt,
+      deadlineAt,
+    );
     // getTasks();
   }
 
   return (
     <aside>
       <div className="single-row-spaced-out">
-        <h1>Menu</h1>
+        <h1 onClick={() => getTasks()}>Menu</h1>
         <button className="icon-button">
           <Icon name="arrowLwL" />
         </button>
@@ -119,9 +137,29 @@ const Menu = () => {
       {openedCreateTaskModal && (
         <CreateTaskModal
           onClose={() => setOpenedCreateTaskModal(false)}
-          onCreate={(title, description, priority, status, listId) => {
+          onCreate={(
+            mainMode,
+            title,
+            description,
+            priority,
+            status,
+            process,
+            listId,
+            startedDay,
+            deadlineDay,
+          ) => {
             setOpenedCreateTaskModal(false);
-            CreateTask(title, description, priority, status, listId);
+            CreateTask(
+              mainMode,
+              title,
+              description,
+              priority,
+              status,
+              process,
+              listId,
+              startedDay,
+              deadlineDay,
+            );
           }}
           lists={lists}
         />

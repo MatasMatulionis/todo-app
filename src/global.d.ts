@@ -2,13 +2,17 @@ interface ElectronAPI {
   getLists(): Promise<any[]>;
   addList(title: string, color: string): Promise<void>;
   deleteList(id: number): Promise<void>;
-  getItems(listId: number): Promise<any[]>;
-  addItem(
+  getTasks(listId: number): Promise<any[]>;
+  addTask(
+    mainMode: boolean,
     title: string,
-    description: string,
-    priority: numbe | null,
-    status: numbe | null,
+    description: string | null,
+    priority: number | null,
+    status: number | null,
+    progress: number | null,
     listId: number | null,
+    startedAt: number | null,
+    deadlineAt: number | null,
   ): Promise<void>;
 }
 

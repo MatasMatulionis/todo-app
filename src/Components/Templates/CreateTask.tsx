@@ -6,11 +6,15 @@ import "./create_task.scss";
 
 type Props = {
   onCreate: (
+    mainMode: boolean,
     title: string,
     description: string | null,
     priority: number | null,
     status: number | null,
+    progress: number | null,
     listId: number | null,
+    startedAt: number | null,
+    deadlineAt: number | null,
   ) => void;
   onClose: () => void;
   lists: any[];
@@ -116,7 +120,17 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
       setNameError("Title is empty");
       return;
     }
-    onCreate(name, description, priority, status, listId);
+    onCreate(
+      taskType,
+      name,
+      description,
+      priority,
+      status,
+      progress,
+      listId,
+      startedDay,
+      deadlineDay,
+    );
   };
 
   const toggleOption = (name: string) => {

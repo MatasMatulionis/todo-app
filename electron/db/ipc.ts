@@ -1,5 +1,5 @@
 import { ipcMain } from "electron";
-import * as Items from "./items";
+import * as Tasks from "./tasks";
 import * as Lists from "./lists";
 
 type TableModule = {
@@ -10,7 +10,7 @@ type TableModule = {
   remove(...args: any[]): void;
 };
 
-const tables: TableModule[] = [Items, Lists];
+const tables: TableModule[] = [Tasks, Lists];
 
 export function initAllTablesAndIPC() {
   tables.forEach((table) => {

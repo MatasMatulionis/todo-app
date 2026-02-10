@@ -5,20 +5,28 @@ contextBridge.exposeInMainWorld("electronAPI", {
   addList: (title: string, color: string) =>
     ipcRenderer.invoke("lists:add", title, color),
   deleteList: (id: number) => ipcRenderer.invoke("lists:remove", id),
-  getItems: (listId: number) => ipcRenderer.invoke("items:get", listId),
-  addItem: (
+  getTasks: (listId: number) => ipcRenderer.invoke("tasks:get", listId),
+  addTask: (
+    mainMode: boolean,
     title: string,
-    description: string,
-    priority: string,
-    status: string,
-    listId: number,
+    description: string | null,
+    priority: number | null,
+    status: number | null,
+    progress: number | null,
+    listId: number | null,
+    startedAt: number | null,
+    deadlineAt: number | null,
   ) =>
     ipcRenderer.invoke(
-      "items:add",
+      "tasks:add",
+      mainMode,
       title,
       description,
       priority,
       status,
+      progress,
       listId,
+      startedAt,
+      deadlineAt,
     ),
 });

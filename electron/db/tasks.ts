@@ -46,27 +46,38 @@ export function getAll() {
 export function add(
   mainMode: boolean,
   title: string,
-  description: string,
+  description: string | null,
   priority: number | null,
   status: number | null,
   progress: number | null,
   listId: number | null,
   startedAt: number | null,
   deadlineAt: number | null,
-  streak: number | null,
-  longestStreak: number | null,
-  lastDayStreak: number | null,
-  currentPeriodTimesDone: number | null,
-  streakPeriod: number | null,
-  streakPeriodTimes: number | null,
-  streakGoal: number | null,
+  // streak: number | null,
+  // longestStreak: number | null,
+  // lastDayStreak: number | null,
+  // currentPeriodTimesDone: number | null,
+  // streakPeriod: number | null,
+  // streakPeriodTimes: number | null,
+  // streakGoal: number | null,
 ) {
   db.prepare(
     `
-    INSERT INTO tasks (title, description, list_id, priority, status, created_at)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO tasks (main_mode, title, description, list_id, priority, progress, status, started_at, deadline_at, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `,
-  ).run(title, description, listId, priority, status, Date.now());
+  ).run(
+    mainMode ? 1 : 0,
+    title,
+    description,
+    listId,
+    priority,
+    progress,
+    status,
+    startedAt,
+    deadlineAt,
+    Date.now(),
+  );
 }
 
 export function remove(id: number) {
