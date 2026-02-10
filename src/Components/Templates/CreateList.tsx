@@ -60,7 +60,7 @@ const CreateListModal = ({ onCreate, onClose }: Props) => {
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h1>CREATE NEW LIST</h1>
         <div>
-          <h2>Title</h2>
+          <h2>Title*</h2>
           {error && <span className="error">{error}</span>}
           <input
             className={error ? "error-input" : ""}
