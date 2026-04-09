@@ -1,10 +1,9 @@
 aside {
-  background-color: var(--green-3);
-  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.5);
-  height: calc(100vh - 4 * var(--preferred-margin));
-  width: 300px;
-  padding: var(--preferred-margin);
-  border-radius: var(--round-radius);
+  // box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  width: 200px;
+  padding: 0 var(--preferred-margin);
+  display: inline-block;
 
   .single-row-spaced-out {
     width: 100%;
@@ -14,54 +13,89 @@ aside {
     align-items: center;
   }
 
+  section > button {
+    height: 34px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border-radius: var(--round-radius);
+    border: none;
+    transition-duration: var(--medium-transition);
+    background-color: transparent;
+    font-size: var(--medium-text-size);
+    padding: 0 var(--preferred-margin);
+    margin: 1px 0px;
+
+    &:hover {
+      background-color: var(--gray-1);
+      &:active {
+        background-color: var(--gray-3);
+      }
+    }
+
+    :not(:first-child) {
+      font-weight: bold;
+    }
+  }
+
+  p {
+    max-width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
   .task {
     margin-top: calc(var(--preferred-margin) * 2);
     display: flex;
     flex-direction: column;
     align-items: start;
 
-    > button {
-      height: 34px;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      border-radius: var(--round-radius);
-      border: none;
-      transition-duration: var(--medium-transition);
-      background-color: transparent;
-      font-size: var(--medium-text-size);
-      padding: 0px 0px 0px var(--preferred-margin);
-      margin: 1px 0px;
+    // > button {
+    //   height: 34px;
+    //   width: 100%;
+    //   display: flex;
+    //   align-items: center;
+    //   cursor: pointer;
+    //   border-radius: var(--round-radius);
+    //   border: none;
+    //   transition-duration: var(--medium-transition);
+    //   background-color: transparent;
+    //   font-size: var(--medium-text-size);
+    //   padding: 0px 0px 0px var(--preferred-margin);
+    //   margin: 1px 0px;
 
-      &:hover {
-        background-color: rgba(var(--black-rgb), 0.5);
-      }
+    //   &:hover {
+    //     background-color: rgba(var(--black-rgb), 0.5);
+    //   }
 
-      .icons {
-        display: flex;
-        justify-content: right;
-        gap: var(--preferred-margin);
-        align-items: center;
-        width: 100%;
-        height: 100%;
+    //   .icons {
+    //     display: flex;
+    //     justify-content: right;
+    //     gap: var(--preferred-margin);
+    //     align-items: center;
+    //     width: 100%;
+    //     height: 100%;
 
-        span {
-          height: 100%;
-          aspect-ratio: 1 / 1;
-          border-radius: var(--round-radius);
-          background-color: rgba(var(--black-rgb), 0.5);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
+    //     span {
+    //       height: 100%;
+    //       aspect-ratio: 1 / 1;
+    //       border-radius: var(--round-radius);
+    //       background-color: rgba(var(--black-rgb), 0.5);
+    //       display: flex;
+    //       align-items: center;
+    //       justify-content: center;
+    //     }
 
-        .missed {
-          background-color: #750e0e !important;
-          font-weight: 700;
-        }
-      }
-    }
+    //     .missed {
+    //       background-color: #750e0e !important;
+    //       font-weight: 700;
+    //     }
+    //   }
+    // }
   }
 
   .icon-button {
@@ -91,49 +125,58 @@ aside {
     flex-direction: column;
     align-items: start;
 
-    .item {
-      width: calc(100% - 8px);
-      display: flex;
-      align-items: center;
-      padding-left: 8px;
-      transition-duration: var(--medium-transition);
-      border-radius: var(--round-radius);
-      cursor: pointer;
-      margin: 1px 0px;
-
-      &:hover {
-        background-color: rgba(var(--black-rgb), 0.5);
-      }
-
-      p {
-        max-width: 180px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
-
-      .option {
-        opacity: 0;
-
-        &:hover {
-          opacity: 0.75 !important;
-        }
-      }
-
-      &:hover .option {
-        opacity: 1;
-      }
-    }
-
     .color {
       height: 12px;
       width: 12px;
 
       border-radius: calc(4px);
-      margin-right: var(--preferred-margin);
+      border: white 1px solid;
+      box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.5);
     }
 
-    .margin-left {
-      margin-left: auto;
-    }
+    // .item {
+    //   width: calc(100% - 8px);
+    //   display: flex;
+    //   align-items: center;
+    //   padding-left: 8px;
+    //   transition-duration: var(--medium-transition);
+    //   border-radius: var(--round-radius);
+    //   cursor: pointer;
+    //   margin: 1px 0px;
+
+    //   &:hover {
+    //     background-color: rgba(var(--black-rgb), 0.5);
+    //   }
+
+    //   p {
+    //     max-width: 180px;
+    //     text-overflow: ellipsis;
+    //     overflow: hidden;
+    //   }
+
+    //   .option {
+    //     opacity: 0;
+
+    //     &:hover {
+    //       opacity: 0.75 !important;
+    //     }
+    //   }
+
+    //   &:hover .option {
+    //     opacity: 1;
+    //   }
+    // }
+
+    // .color {
+    //   height: 12px;
+    //   width: 12px;
+
+    //   border-radius: calc(4px);
+    //   margin-right: var(--preferred-margin);
+    // }
+
+    // .margin-left {
+    //   margin-left: auto;
+    // }
   }
 }

@@ -12,7 +12,8 @@
   .modal {
     width: calc(300px - var(--preferred-margin) * 4);
     padding: calc(var(--preferred-margin) * 4);
-    background-color: var(--green-3);
+    background-color: var(--gray-2);
+    border: 1px var(--gray-1) solid;
     border-radius: var(--round-radius);
     display: flex;
     justify-content: space-around;
@@ -27,7 +28,7 @@
     input[type="text"] {
       width: calc(100% - var(--preferred-margin) * 2 - 4px);
       outline: none;
-      border: 2px var(--white) solid;
+      border: 1px var(--gray-3) solid;
       border-radius: var(--round-radius);
       background-color: transparent;
       padding: var(--preferred-margin);
@@ -35,11 +36,11 @@
       transition-duration: var(--medium-transition);
 
       &:focus {
-        border: 2px var(--green-1) solid;
+        border: 1px var(--gray-1) solid;
       }
 
       &.error-input {
-        border: 2px var(--red) solid;
+        border: 1px var(--red) solid;
       }
     }
 
@@ -66,6 +67,23 @@
           outline: none;
           border: none;
 
+          &:first-child {
+            border-left: var(--gray-4) solid 1px;
+            border-top: var(--gray-4) solid 1px;
+            border-bottom: var(--gray-4) solid 1px;
+          }
+
+          &:last-child {
+            border-right: var(--gray-4) solid 1px;
+            border-top: var(--gray-4) solid 1px;
+            border-bottom: var(--gray-4) solid 1px;
+          }
+
+          &:not(:first-child):not(:last-child) {
+            border-top: var(--gray-4) solid 1px;
+            border-bottom: var(--gray-4) solid 1px;
+          }
+
           &:hover {
             filter: brightness(0.9);
           }
@@ -83,33 +101,6 @@
       }
     }
 
-    > button {
-      width: calc(100% - var(--preferred-margin));
-      cursor: pointer;
-      padding: var(--preferred-margin);
-      font-size: var(--medium-text-size);
-      border-radius: var(--round-radius);
-      border: none;
-      background-color: transparent;
-      transition-duration: var(--medium-transition);
-
-      &.confirm {
-        background-color: var(--green-4);
-
-        &:hover {
-          background-color: var(--green-1);
-        }
-      }
-
-      &:not(.confirm) {
-        box-shadow: inset 0 0 0 2px var(--white);
-
-        &:hover {
-          box-shadow: inset 0 0 0 2px rgb(126, 126, 126);
-        }
-      }
-    }
-
     a {
       cursor: pointer;
 
@@ -123,17 +114,24 @@
       text-align: left;
       color: var(--red);
       font-size: var(--small-text-size);
+      padding: 0 var(--preferred-margin);
     }
   }
 
   input[type="color"] {
-    border: none;
     padding: 0;
     width: 50px;
     height: 50px;
     border-radius: var(--preferred-margin);
     cursor: pointer;
     background: none; /* ensures the selected color fills the input */
+    transition-duration: var(--medium-transition);
+    border: 1px solid var(--gray-4);
+    overflow: hidden;
+
+    &:hover {
+      transform: scale(110%);
+    }
   }
 
   /* WebKit hack to remove inner swatch shadow */
@@ -144,5 +142,7 @@
   input[type="color"]::-webkit-color-swatch {
     border: none;
     border-radius: var(--preferred-margin);
+    width: 100%;
+    height: 100%;
   }
 }

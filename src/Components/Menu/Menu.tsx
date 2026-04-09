@@ -64,10 +64,10 @@ const Menu = () => {
   return (
     <aside>
       <div className="single-row-spaced-out">
-        <h1 onClick={() => getTasks()}>Menu</h1>
-        <button className="icon-button">
+        <h1 onClick={() => getTasks()}>Todo.</h1>
+        {/* <button className="icon-button">
           <Icon name="arrowLwL" />
-        </button>
+        </button> */}
       </div>
       <section className="task">
         <div className="single-row-spaced-out">
@@ -80,23 +80,17 @@ const Menu = () => {
           </button>
         </div>
         <button>
-          <p>Today</p>
-          <div className="icons">
-            <span>10</span>
-          </div>
+          <p>Due Soon</p>
         </button>
         <button>
-          <p>Upcoming</p>
+          <p>Upcoming Soon</p>
         </button>
         <button>
           <p>Completed</p>
         </button>
         <button>
-          <p>Missed</p>
-          <div className="icons">
-            <span className="missed">!</span>
-            <span>10</span>
-          </div>
+          <p>Overdue</p>
+          <span>2</span>
         </button>
       </section>
       <section className="list">
@@ -110,10 +104,10 @@ const Menu = () => {
           </button>
         </div>
         {lists.map((list, index) => (
-          <div className="item" key={index}>
+          <button className="item" key={index}>
+            <p title={list.title}>{list.title}</p>
             <div className="color" style={{ backgroundColor: list.color }} />
-            <p>{list.title}</p>
-            <button className="icon-button option margin-left">
+            {/* <button className="icon-button option margin-left">
               <Icon name="edit" />
             </button>
             <button
@@ -121,8 +115,8 @@ const Menu = () => {
               className="icon-button option"
             >
               <Icon name="trash" />
-            </button>
-          </div>
+            </button> */}
+          </button>
         ))}
       </section>
       {openedCreateListModal && (

@@ -60,8 +60,11 @@ const CreateListModal = ({ onCreate, onClose }: Props) => {
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h1>CREATE NEW LIST</h1>
         <div>
-          <h2>Title*</h2>
-          {error && <span className="error">{error}</span>}
+          <div className="row">
+            <h2>Title*</h2>
+            {error && <span className="error">{error}</span>}
+          </div>
+
           <input
             className={error ? "error-input" : ""}
             type="text"
@@ -76,7 +79,7 @@ const CreateListModal = ({ onCreate, onClose }: Props) => {
         <div>
           <h2>Color</h2>
           <div className="row">
-            <div>
+            <div className="color-row">
               {colorsGenerated.map((color, index) => (
                 <button
                   key={index}
@@ -94,6 +97,7 @@ const CreateListModal = ({ onCreate, onClose }: Props) => {
               value={color}
               onChange={(e) => setColor(e.target.value)}
               type="color"
+              style={{ backgroundColor: color }}
             />
           </div>
           <a
@@ -104,16 +108,17 @@ const CreateListModal = ({ onCreate, onClose }: Props) => {
             Regenerate
           </a>
         </div>
-
-        <button
-          className="confirm"
-          onClick={() =>
-            name !== "" ? onCreate(name, color) : setError("Title is empty")
-          }
-        >
-          Create
-        </button>
-        <button onClick={onClose}>Cancel</button>
+        <div className="row confirm-buttons">
+          <button
+            className="confirm"
+            onClick={() =>
+              name !== "" ? onCreate(name, color) : setError("Title is empty")
+            }
+          >
+            Create
+          </button>
+          <button onClick={onClose}>Cancel</button>
+        </div>
       </div>
     </div>
   );
