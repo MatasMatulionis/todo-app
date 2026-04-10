@@ -56,7 +56,7 @@ const CreateListModal = ({ onCreate, onClose }: Props) => {
   }
 
   return (
-    <div className="backdrop-list" onClick={onClose}>
+    <div className="backdrop create-list" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h1>CREATE NEW LIST</h1>
         <div>

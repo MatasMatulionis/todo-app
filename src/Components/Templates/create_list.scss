@@ -1,4 +1,4 @@
-.backdrop-list {
+.create-list {
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -25,87 +25,51 @@
       margin-bottom: calc(var(--preferred-margin) * 2);
     }
 
-    input[type="text"] {
-      width: calc(100% - var(--preferred-margin) * 2 - 4px);
-      outline: none;
-      border: 1px var(--gray-3) solid;
-      border-radius: var(--round-radius);
-      background-color: transparent;
-      padding: var(--preferred-margin);
-      font-size: var(--medium-text-size);
-      transition-duration: var(--medium-transition);
-
-      &:focus {
-        border: 1px var(--gray-1) solid;
-      }
-
-      &.error-input {
-        border: 1px var(--red) solid;
-      }
-    }
-
     > div {
       width: 100%;
     }
 
-    .row {
+    .color-row {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       flex-direction: row;
 
-      > div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: row;
+      button {
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        outline: none;
+        border: none;
 
-        button {
-          cursor: pointer;
-          width: 50px;
-          height: 50px;
-          outline: none;
-          border: none;
-
-          &:first-child {
-            border-left: var(--gray-4) solid 1px;
-            border-top: var(--gray-4) solid 1px;
-            border-bottom: var(--gray-4) solid 1px;
-          }
-
-          &:last-child {
-            border-right: var(--gray-4) solid 1px;
-            border-top: var(--gray-4) solid 1px;
-            border-bottom: var(--gray-4) solid 1px;
-          }
-
-          &:not(:first-child):not(:last-child) {
-            border-top: var(--gray-4) solid 1px;
-            border-bottom: var(--gray-4) solid 1px;
-          }
-
-          &:hover {
-            filter: brightness(0.9);
-          }
-
-          &:first-child {
-            border-radius: var(--preferred-margin) 0px 0px
-              var(--preferred-margin);
-          }
-
-          &:last-child {
-            border-radius: 0px var(--preferred-margin) var(--preferred-margin)
-              0px;
-          }
+        &:first-child {
+          border-left: var(--gray-4) solid 1px;
+          border-top: var(--gray-4) solid 1px;
+          border-bottom: var(--gray-4) solid 1px;
         }
-      }
-    }
 
-    a {
-      cursor: pointer;
+        &:last-child {
+          border-right: var(--gray-4) solid 1px;
+          border-top: var(--gray-4) solid 1px;
+          border-bottom: var(--gray-4) solid 1px;
+        }
 
-      &:hover {
-        text-decoration: underline;
+        &:not(:first-child):not(:last-child) {
+          border-top: var(--gray-4) solid 1px;
+          border-bottom: var(--gray-4) solid 1px;
+        }
+
+        &:hover {
+          filter: brightness(0.9);
+        }
+
+        &:first-child {
+          border-radius: var(--preferred-margin) 0px 0px var(--preferred-margin);
+        }
+
+        &:last-child {
+          border-radius: 0px var(--preferred-margin) var(--preferred-margin) 0px;
+        }
       }
     }
 

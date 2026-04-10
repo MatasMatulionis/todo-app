@@ -122,7 +122,14 @@ h2 {
   font-weight: 700;
 }
 
+/*///////////////////////////////////////////////////////////*/
+
 .confirm-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+
   button {
     width: calc(100% - var(--preferred-margin));
     cursor: pointer;
@@ -151,5 +158,51 @@ h2 {
         color: var(--white);
       }
     }
+  }
+}
+
+.backdrop {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(var(--black-rgb), 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type="text"] {
+  width: calc(100% - var(--preferred-margin) * 2 - 4px);
+  outline: none;
+  border: 1px var(--gray-3) solid;
+  border-radius: var(--round-radius);
+  background-color: transparent;
+  padding: var(--preferred-margin);
+  font-size: var(--medium-text-size);
+  transition-duration: var(--medium-transition);
+
+  &:focus {
+    border: 1px var(--gray-1) solid;
+  }
+
+  &.error-input {
+    border: 1px var(--red) solid;
+  }
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+a {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
   }
 }

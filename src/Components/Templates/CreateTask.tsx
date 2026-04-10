@@ -163,12 +163,12 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
 
   return (
     <div
-      className={`backdrop-task ${taskType ? "theme-orange" : "theme-green"}`}
+      className={`backdrop create-task ${taskType ? "theme-orange" : "theme-green"}`}
       onClick={onClose}
     >
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h1>CREATE NEW TASK</h1>
-        <button
+        {/* <button
           onClick={() => setTaskType((e) => !e)}
           className="special-button"
         >
@@ -367,15 +367,13 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
               <h2>Nothing to show here</h2>
             </div>
           )}
-        </div>
+        </div> */}
 
-        <div className="row">
-          <button className="submit-button confirm" onClick={handleCreate}>
+        <div className="row confirm-buttons">
+          <button className="confirm" onClick={handleCreate}>
             Create
           </button>
-          <button className="submit-button" onClick={onClose}>
-            Cancel
-          </button>
+          <button onClick={onClose}>Cancel</button>
         </div>
       </div>
     </div>
