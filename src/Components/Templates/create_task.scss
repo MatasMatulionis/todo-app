@@ -25,6 +25,92 @@
       width: 100%;
     }
 
+    .stages {
+      > * {
+        width: 24px;
+        height: 24px;
+        border-radius: var(--round-radius);
+        background-color: var(--gray-1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition-duration: var(--long-transition);
+
+        &:hover.previous {
+          transform: scale(120%);
+        }
+
+        &:hover:not(.previous) {
+          cursor: not-allowed;
+        }
+
+        &:not(.separator) {
+          border: white 1px solid;
+        }
+      }
+
+      .active {
+        background-color: var(--gray-4);
+        color: white;
+      }
+
+      .previous {
+        background-color: var(--confirm);
+        color: white;
+      }
+
+      .separator {
+        width: 20px;
+        height: 2px;
+        background-color: var(--gray-3);
+      }
+    }
+
+    .special-button {
+      margin-bottom: var(--preferred-margin);
+    }
+
+    .error {
+      width: 100%;
+      text-align: left;
+      color: var(--red);
+      font-size: var(--small-text-size);
+      padding: 0 var(--preferred-margin);
+    }
+
+    .priority {
+      height: 40px;
+
+      button {
+        transition-duration: var(--long-transition);
+        padding: 0;
+        width: 24px;
+        height: 100%;
+        background-color: var(--gray-1);
+        border: white 1px solid;
+        border-radius: var(--round-radius);
+
+        &:hover {
+          background-color: var(--gray-2);
+        }
+
+        &.active {
+          background: var(--gray-3);
+          color: var(--white);
+        }
+      }
+    }
+
+    .icon {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--preferred-margin);
+
+      * {
+        color: var(--gray-3);
+      }
+    }
+
     // .special-button {
     //   cursor: pointer;
     //   position: relative;
@@ -87,7 +173,7 @@
     // }
 
     // h1 {
-    //   margin-bottom: calc(var(--preferred-margin) * 2);
+    //   margin-bottom: calc(var(--prefed-margin) * 2);
     // }
 
     // input[type="text"],

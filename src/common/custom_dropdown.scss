@@ -12,6 +12,7 @@
     cursor: pointer;
     color: var(--black);
     font-size: var(--medium-font-size);
+    border: white 1px solid;
   }
 
   .menu {
@@ -36,12 +37,14 @@
   }
 
   .menu {
+    border: white 1px solid;
     li:hover {
-      background: var(--offwhite);
+      background: var(--gray-2);
     }
 
     li.active {
-      background: var(--green-1);
+      color: var(--white);
+      background: var(--gray-3);
     }
 
     li:first-child {

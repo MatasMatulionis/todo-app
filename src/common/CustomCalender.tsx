@@ -4,7 +4,7 @@ import "./custom_calender.scss";
 
 type CustomCalenderProps<T> = {
   onCreate: (id: number | null) => void;
-  date: number;
+  date: number | null;
 };
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -83,7 +83,7 @@ export function CustomCalender<T>({ onCreate, date }: CustomCalenderProps<T>) {
   return (
     <div className="calendar-wrapper" ref={dropdownRef}>
       <button className="calendar-trigger" onClick={() => setOpen((o) => !o)}>
-        {timeToString(date)}
+        {date !== null ? timeToString(date) : "Not set"}
       </button>
 
       {open && (

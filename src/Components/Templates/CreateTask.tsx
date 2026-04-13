@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import CustomDropdown from "../../common/CustomDropdown";
 import CustomCalender from "../../common/CustomCalender";
 
+import { MoveRight } from "lucide-react";
+
 import "./create_task.scss";
 
 type Props = {
@@ -21,9 +23,10 @@ type Props = {
 };
 
 const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
+  const [currentStage, setCurrentStage] = useState(0);
   const [taskType, setTaskType] = useState(false);
   const [name, setName] = useState("");
-  const [nameError, setNameError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
   const [priority, setPriority] = useState<number | null>(null);
   const [status, setStatus] = useState<number | null>(null);
@@ -44,20 +47,22 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
     { id: 3, name: "Done" },
   ];
 
-  const PRIORITIES = [
-    { id: 0, name: "None", color: "#545454" },
-    { id: 1, name: "Low", color: "#8ca94a" },
-    { id: 2, name: "Medium", color: "#d2953f" },
-    { id: 3, name: "High", color: "#ad3535" },
-    { id: 4, name: "Extreme", color: "#ad468d" },
-    { id: 5, name: "Critical", color: "#5b4ac9" },
-  ];
-
   const STREAKS = [
     { id: 0, name: "Day" },
     { id: 1, name: "Week" },
     { id: 2, name: "Month" },
     { id: 3, name: "Year" },
+  ];
+
+  const DESCRIPTION = [
+    { id: 0, type: false, name: "Required Information" },
+    { id: 1, type: false, name: "Set Dates" },
+    { id: 2, type: false, name: "Additional Information" },
+    { id: 3, type: false, name: "Work Progress" },
+    { id: 0, type: true, name: "Required Information" },
+    { id: 1, type: true, name: "Set Dates" },
+    { id: 2, type: true, name: "Additional Information" },
+    { id: 3, type: true, name: "Streak Settings" },
   ];
 
   type TaskOption<T extends string | number> = {
@@ -116,10 +121,6 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
   ]);
 
   const handleCreate = () => {
-    if (!name.trim()) {
-      setNameError("Title is empty");
-      return;
-    }
     onCreate(
       taskType,
       name,
@@ -133,41 +134,204 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
     );
   };
 
-  const toggleOption = (name: string) => {
-    setSimpleTaskOptions((prev) =>
-      prev.map((option) =>
-        option.name === name
-          ? { ...option, on: !option.on, saved: !option.saved }
-          : option,
-      ),
-    );
+  const handleNext = () => {
+    if (currentStage === 3) {
+      handleCreate;
+      return;
+    }
+
+    if (currentStage === 0) {
+      if (!name.trim()) {
+        setError("Title is empty");
+        return;
+      }
+    }
+
+    setCurrentStage((e) => e + 1);
   };
 
-  const isVisible = (name: string) =>
-    simpleTaskOptions.some((o) => o.name === name && o.on === o.saved);
+  // const toggleOption = (name: string) => {
+  //   setSimpleTaskOptions((prev) =>
+  //     prev.map((option) =>
+  //       option.name === name
+  //         ? { ...option, on: !option.on, saved: !option.saved }
+  //         : option,
+  //     ),
+  //   );
+  // };
 
-  const allOff = simpleTaskOptions.filter((o) => o.saved === o.on).length;
+  // const isVisible = (name: string) =>
+  //   simpleTaskOptions.some((o) => o.name === name && o.on === o.saved);
 
-  const saveOptions = () => {
-    simpleTaskOptions.forEach((o) => {
-      o.setValue(o.on ? o.default : null);
-    });
+  // const allOff = simpleTaskOptions.filter((o) => o.saved === o.on).length;
 
-    setSimpleTaskOptions((prev) =>
-      prev.map((option) => ({
-        ...option,
-        saved: true,
-      })),
-    );
-  };
+  // const saveOptions = () => {
+  //   simpleTaskOptions.forEach((o) => {
+  //     o.setValue(o.on ? o.default : null);
+  //   });
+
+  //   setSimpleTaskOptions((prev) =>
+  //     prev.map((option) => ({
+  //       ...option,
+  //       saved: true,
+  //     })),
+  //   );
+  // };
 
   return (
-    <div
-      className={`backdrop create-task ${taskType ? "theme-orange" : "theme-green"}`}
-      onClick={onClose}
-    >
+    <div className={`backdrop create-task`} onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h1>CREATE NEW TASK</h1>
+        <div className="row stages">
+          {[0, 1, 2, 3].map((index, _) => (
+            <>
+              <button
+                className={
+                  currentStage > index
+                    ? "previous"
+                    : currentStage === index
+                      ? "active"
+                      : ""
+                }
+                onClick={() => {
+                  if (currentStage > index) setCurrentStage(index);
+                }}
+              >
+                {index + 1}
+              </button>
+              {index !== 3 && <div className="separator" />}
+            </>
+          ))}
+        </div>
+        <h2>
+          {
+            DESCRIPTION.find(
+              (d) => d.id === currentStage && d.type === taskType,
+            )?.name
+          }
+        </h2>
+
+        {currentStage === 0 && (
+          <>
+            <div>
+              <h2>Type</h2>
+              <button
+                onClick={() => setTaskType((e) => !e)}
+                className={`special-button ${taskType}`}
+              >
+                <span className="text">Simple Task</span>
+                <span className="text">Streak Task</span>
+                <div className="moving-bg"></div>
+              </button>
+            </div>
+            <div>
+              <div className="row">
+                <h2>Title*</h2>
+                {error && <span className="error">{error}</span>}
+              </div>
+
+              <input
+                className={error ? "error-input" : ""}
+                type="text"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setError(null);
+                }}
+                placeholder=""
+              />
+            </div>
+            <div>
+              <div className="row">
+                <h2>Description</h2>
+              </div>
+              <textarea
+                value={description === null ? "" : description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+                placeholder=""
+              />
+            </div>
+          </>
+        )}
+
+        {currentStage === 1 && (
+          <>
+            <div>
+              <h2>Start Date</h2>
+              <CustomCalender
+                onCreate={(date) => {
+                  setStartedDay(date);
+                }}
+                date={startedDay}
+              />
+              <a
+                onClick={() => {
+                  setStartedDay(null);
+                }}
+              >
+                Reset
+              </a>
+            </div>
+            <div>
+              <h2>Deadline Date</h2>
+              <CustomCalender
+                onCreate={(date) => {
+                  setDeadlineDay(date);
+                }}
+                date={deadlineDay}
+              />
+              <a
+                onClick={() => {
+                  setDeadlineDay(null);
+                }}
+              >
+                Reset
+              </a>
+            </div>
+          </>
+        )}
+
+        {currentStage === 2 && (
+          <>
+            <div>
+              <h2>List</h2>
+              <CustomDropdown
+                options={lists}
+                value={listId}
+                onChange={setListId}
+                valueKey="id"
+                labelKey="title"
+                allowNone={true}
+              />
+            </div>
+            <div>
+              <h2>Priority</h2>
+              <div className="row priority">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value, _) => (
+                  <button
+                    onClick={() => {
+                      priority === value
+                        ? setPriority(null)
+                        : setPriority(value);
+                    }}
+                    key={value}
+                    className={value === priority ? "active" : ""}
+                  >
+                    {value}
+                  </button>
+                ))}
+              </div>
+              <div className="icon">
+                <h2>Smallest</h2>
+                <MoveRight />
+                <h2>Biggest</h2>
+              </div>
+            </div>
+          </>
+        )}
+
         {/* <button
           onClick={() => setTaskType((e) => !e)}
           className="special-button"
@@ -370,8 +534,8 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
         </div> */}
 
         <div className="row confirm-buttons">
-          <button className="confirm" onClick={handleCreate}>
-            Create
+          <button className="confirm" onClick={handleNext}>
+            {currentStage === 3 ? "Create" : "Next"}
           </button>
           <button onClick={onClose}>Cancel</button>
         </div>

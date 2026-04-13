@@ -68,11 +68,11 @@
       }
 
       &.today {
-        border: 2px solid var(--color-4);
+        border: 2px solid var(--gray-4);
       }
 
       &.selected {
-        background: var(--color-3);
+        background: var(--gray-3);
         color: white;
       }
     }
@@ -91,5 +91,6 @@
     cursor: pointer;
     color: var(--black);
     font-size: var(--medium-font-size);
+    border: white 1px solid;
   }
 }
