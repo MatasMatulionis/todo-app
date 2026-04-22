@@ -55,11 +55,11 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
   ];
 
   const DESCRIPTION = [
-    { id: 0, type: false, name: "Required Information" },
+    { id: 0, type: false, name: "General Information" },
     { id: 1, type: false, name: "Set Dates" },
     { id: 2, type: false, name: "Additional Information" },
     { id: 3, type: false, name: "Work Progress" },
-    { id: 0, type: true, name: "Required Information" },
+    { id: 0, type: true, name: "General Information" },
     { id: 1, type: true, name: "Set Dates" },
     { id: 2, type: true, name: "Additional Information" },
     { id: 3, type: true, name: "Streak Settings" },
@@ -136,7 +136,7 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
 
   const handleNext = () => {
     if (currentStage === 3) {
-      handleCreate;
+      handleCreate();
       return;
     }
 
@@ -329,6 +329,42 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
                 <h2>Biggest</h2>
               </div>
             </div>
+          </>
+        )}
+        {currentStage === 3 && (
+          <>
+            {taskType ? (
+              <></>
+            ) : (
+              <>
+                <div className="full-width">
+                  <div className="row">
+                    <h2>Progress</h2>
+                    <h2>{(progress ?? 0) * 10}%</h2>
+                  </div>
+                  <input
+                    value={progress ?? 0}
+                    onChange={(e) => setProgress(Number(e.target.value))}
+                    type="range"
+                    id="volume"
+                    name="volume"
+                    min="0"
+                    max="10"
+                  />
+                </div>
+                <div className="custom-select">
+                  <h2>Status</h2>
+                  <CustomDropdown
+                    options={STATUSES}
+                    value={status}
+                    onChange={setStatus}
+                    valueKey="id"
+                    labelKey="name"
+                    allowNone={false}
+                  />
+                </div>
+              </>
+            )}
           </>
         )}
 
