@@ -1,0 +1,42 @@
+.tooltip {
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background-color: var(--gray-4);
+  margin: var(--preferred-margin) var(--preferred-margin)
+    var(--preferred-margin) 0;
+
+  span {
+    color: var(--white);
+    font-weight: bolder;
+  }
+
+  &:hover span {
+    animation: wiggle 0.5s ease-in-out;
+  }
+
+  .appear-text {
+    position: absolute;
+    width: max-content;
+    max-width: 300px;
+    left: 0;
+    top: 110%;
+    background-color: var(--gray-2);
+    border: white 1px solid;
+    border-radius: var(--round-radius);
+    padding: var(--preferred-margin);
+    user-select: none;
+    pointer-events: none;
+    transition-duration: var(--medium-transition);
+    opacity: 0;
+  }
+
+  &:hover .appear-text {
+    transition-duration: var(--medium-transition);
+    opacity: 1;
+  }
+}

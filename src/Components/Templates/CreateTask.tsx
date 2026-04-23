@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import CustomDropdown from "../../common/CustomDropdown";
 import CustomCalender from "../../common/CustomCalender";
+import Tooltip from "../../common/Tooltip";
 
 import { MoveRight } from "lucide-react";
 
@@ -34,6 +35,10 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
   const [listId, setListId] = useState<number | null>(null);
   const [startedDay, setStartedDay] = useState<number | null>(null);
   const [deadlineDay, setDeadlineDay] = useState<number | null>(null);
+  const [streakGoal, setStreakGoal] = useState<number | null>(null);
+  const [timePerPeriod, setTimePerPeriod] = useState<number | null>(null);
+  const [period, setPeriod] = useState<number | null>(null);
+  const [recommendation, setRecommendation] = useState<string | null>(null);
 
   const setDateBoth = (value: number | null) => {
     setStartedDay(value);
@@ -135,11 +140,6 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
   };
 
   const handleNext = () => {
-    if (currentStage === 3) {
-      handleCreate();
-      return;
-    }
-
     if (currentStage === 0) {
       if (!name.trim()) {
         setError("Title is empty");
@@ -147,36 +147,63 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
       }
     }
 
+    if (currentStage === 3 && taskType) {
+      if (period === null || timePerPeriod === null) {
+        setError("This cannot be empty");
+        return;
+      }
+
+      if (period === 0 || timePerPeriod === 0) {
+        setError("This cannot be zero");
+        return;
+      }
+    }
+
+    if (currentStage === 3) {
+      handleCreate();
+      return;
+    }
+
+    setError(null);
     setCurrentStage((e) => e + 1);
   };
 
-  // const toggleOption = (name: string) => {
-  //   setSimpleTaskOptions((prev) =>
-  //     prev.map((option) =>
-  //       option.name === name
-  //         ? { ...option, on: !option.on, saved: !option.saved }
-  //         : option,
-  //     ),
-  //   );
-  // };
+  const recommendationCheck = (times: number | null, days: number | null) => {
+    console.log(times, days);
+    setRecommendation(null);
 
-  // const isVisible = (name: string) =>
-  //   simpleTaskOptions.some((o) => o.name === name && o.on === o.saved);
+    if (times === null || days === null) return;
+    if (times > days || times === 0) return;
 
-  // const allOff = simpleTaskOptions.filter((o) => o.saved === o.on).length;
+    var num = gcd(days, times);
 
-  // const saveOptions = () => {
-  //   simpleTaskOptions.forEach((o) => {
-  //     o.setValue(o.on ? o.default : null);
-  //   });
+    if (num === 1) return;
 
-  //   setSimpleTaskOptions((prev) =>
-  //     prev.map((option) => ({
-  //       ...option,
-  //       saved: true,
-  //     })),
-  //   );
-  // };
+    days /= num;
+    times /= num;
+
+    var s1 = times === 1 ? "" : "s";
+    var s2 = days === 1 ? "" : "s";
+
+    setRecommendation(
+      "Recommended: " +
+        times.toString() +
+        " time" +
+        s1 +
+        " per " +
+        days.toString() +
+        " day" +
+        s2,
+    );
+  };
+
+  function gcd(a: number, b: number) {
+    if (!b) {
+      return a;
+    }
+
+    return gcd(b, a % b);
+  }
 
   return (
     <div className={`backdrop create-task`} onClick={onClose}>
@@ -194,7 +221,10 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
                       : ""
                 }
                 onClick={() => {
-                  if (currentStage > index) setCurrentStage(index);
+                  if (currentStage > index) {
+                    setCurrentStage(index);
+                    setError(null);
+                  }
                 }}
               >
                 {index + 1}
@@ -334,24 +364,81 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
         {currentStage === 3 && (
           <>
             {taskType ? (
-              <></>
-            ) : (
               <>
-                <div className="full-width">
-                  <div className="row">
-                    <h2>Progress</h2>
-                    <h2>{(progress ?? 0) * 10}%</h2>
-                  </div>
+                <div>
+                  <h2>Streak Goal</h2>
                   <input
-                    value={progress ?? 0}
-                    onChange={(e) => setProgress(Number(e.target.value))}
-                    type="range"
-                    id="volume"
-                    name="volume"
-                    min="0"
-                    max="10"
+                    type="text"
+                    className="numeric"
+                    inputMode="numeric"
+                    value={streakGoal ?? ""}
+                    onChange={(e) => {
+                      var num = e.target.value.replace(/[^0-9]/g, "");
+                      if (num.length <= 5)
+                        setStreakGoal(num === "" ? null : Number(num));
+                    }}
                   />
                 </div>
+                <div>
+                  <div className="row">
+                    <h2>Streak Period*</h2>
+                    {error && <span className="error">{error}</span>}
+                  </div>
+                  <div className="row">
+                    <input
+                      type="text"
+                      className="numeric"
+                      inputMode="numeric"
+                      value={timePerPeriod ?? ""}
+                      onChange={(e) => {
+                        var num = e.target.value.replace(/[^0-9]/g, "");
+                        if (num.length <= 3)
+                          setTimePerPeriod(num === "" ? null : Number(num));
+
+                        recommendationCheck(Number(num), period);
+                        setError(null);
+                      }}
+                    />
+                    <span className="single-line">time(s) per</span>
+                    <input
+                      type="text"
+                      className="numeric"
+                      inputMode="numeric"
+                      value={period ?? ""}
+                      onChange={(e) => {
+                        var num = e.target.value.replace(/[^0-9]/g, "");
+                        if (num.length <= 3)
+                          setPeriod(num === "" ? null : Number(num));
+
+                        recommendationCheck(timePerPeriod, Number(num));
+                        setError(null);
+                      }}
+                    />
+                    <span className="single-line">days</span>
+                  </div>
+                  {recommendation && (
+                    <span className="recommendation">
+                      <Tooltip text="You are more likely to keep the streak when the days is set to lower number!" />
+                      {recommendation}
+                    </span>
+                  )}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="row">
+                  <h2>Progress</h2>
+                  <h2>{(progress ?? 0) * 10}%</h2>
+                </div>
+                <input
+                  value={progress ?? 0}
+                  onChange={(e) => setProgress(Number(e.target.value))}
+                  type="range"
+                  id="volume"
+                  name="volume"
+                  min="0"
+                  max="10"
+                />
                 <div className="custom-select">
                   <h2>Status</h2>
                   <CustomDropdown

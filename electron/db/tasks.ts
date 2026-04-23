@@ -53,13 +53,10 @@ export function add(
   listId: number | null,
   startedAt: number | null,
   deadlineAt: number | null,
-  // streak: number | null,
-  // longestStreak: number | null,
-  // lastDayStreak: number | null,
-  // currentPeriodTimesDone: number | null,
-  // streakPeriod: number | null,
-  // streakPeriodTimes: number | null,
-  // streakGoal: number | null,
+  streakId: number | null,
+  streakPeriod: number | null,
+  streakTimesPerPeriod: number | null,
+  streakGoal: number | null,
 ) {
   db.prepare(
     `
