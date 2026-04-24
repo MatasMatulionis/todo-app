@@ -14,8 +14,6 @@ const Menu = () => {
     getLists();
   }, []);
 
-  //JSON.stringify(list)
-
   //List
   function getLists() {
     window.electronAPI.getLists().then(setLists);
@@ -31,10 +29,11 @@ const Menu = () => {
     getLists();
   }
 
-  //Task
-  function getTasks() {
-    window.electronAPI.getTasks(lists[0].id).then(console.log);
-  }
+  // Overdue Task Length
+
+  // function getTasks() {
+  //   window.electronAPI.getTasks({ listId: lists[0].id }).then(console.log);
+  // }
 
   function CreateTask(
     mainMode: boolean,
@@ -91,6 +90,9 @@ const Menu = () => {
         <button>
           <p>Overdue</p>
           <span>2</span>
+        </button>
+        <button>
+          <p>Keep the Streak</p>
         </button>
       </section>
       <section className="list">

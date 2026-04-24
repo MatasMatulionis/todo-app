@@ -2,6 +2,27 @@ main {
   width: calc(100% - 200px);
   height: 100vh;
   background-color: var(--gray-1);
+  padding: var(--preferred-margin);
+  box-sizing: border-box;
   //   box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.5);
-  // padding: var(--preferred-margin);
+
+  .special-button {
+    max-width: 300px;
+    margin: auto;
+  }
+
+  .list-view {
+    display: flex;
+    flex-direction: column;
+    gap: var(--preferred-margin);
+    overflow-y: scroll;
+
+    button {
+      font-size: var(--text-md);
+      background-color: var(--gray-2);
+      border: white 1px solid;
+      border-radius: var(--round-radius);
+      padding: var(--preferred-margin);
+    }
+  }
 }

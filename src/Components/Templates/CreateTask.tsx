@@ -52,13 +52,6 @@ const CreateTaskModal = ({ onCreate, onClose, lists }: Props) => {
     { id: 3, name: "Done" },
   ];
 
-  const STREAKS = [
-    { id: 0, name: "Day" },
-    { id: 1, name: "Week" },
-    { id: 2, name: "Month" },
-    { id: 3, name: "Year" },
-  ];
-
   const DESCRIPTION = [
     { id: 0, type: false, name: "General Information" },
     { id: 1, type: false, name: "Set Dates" },

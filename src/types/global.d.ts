@@ -1,8 +1,18 @@
+export {}; // REQUIRED
+
+declare global {
+  interface Window {
+    electronAPI: ElectronAPI;
+  }
+}
+
 interface ElectronAPI {
+  //List
   getLists(): Promise<any[]>;
   addList(title: string, color: string): Promise<void>;
   deleteList(id: number): Promise<void>;
-  getTasks(listId: number): Promise<any[]>;
+  //Task
+  getTasks(filters?: any): Promise<any[]>;
   addTask(
     mainMode: boolean,
     title: string,

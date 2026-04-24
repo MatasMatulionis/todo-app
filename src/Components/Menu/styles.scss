@@ -4,6 +4,7 @@ aside {
   width: 200px;
   padding: 0 var(--preferred-margin);
   display: inline-block;
+  overflow-y: hidden;
 
   .single-row-spaced-out {
     width: 100%;

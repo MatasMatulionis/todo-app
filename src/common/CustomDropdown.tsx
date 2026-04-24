@@ -4,13 +4,15 @@ import "./custom_dropdown.scss";
 
 type CustomDropdownProps<T> = {
   options: T[];
-  value: number | null;
+  value: number | null | undefined;
   valueKey: keyof T;
   labelKey: keyof T;
-  onChange: (id: number | null) => void;
+  onChange: (id: number | null | undefined) => void;
+  onOpen?: () => void;
   placeholder?: string;
   allowNone?: boolean;
   noneLabel?: string;
+  noneState?: null | undefined;
 };
 
 export function CustomDropdown<T>({
@@ -19,11 +21,20 @@ export function CustomDropdown<T>({
   valueKey,
   labelKey,
   onChange,
+  onOpen,
   placeholder = "Select option",
   allowNone = true,
   noneLabel = "None",
+  noneState,
 }: CustomDropdownProps<T>) {
+  noneState = noneState !== undefined ? null : undefined;
+
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (open && onOpen !== undefined) onOpen();
+  }, [open]);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const selected = options.find((o) => o[valueKey] === value);
@@ -49,7 +60,7 @@ export function CustomDropdown<T>({
         className="trigger"
         onClick={() => setOpen((o) => !o)}
       >
-        {value === null
+        {value === noneState
           ? noneLabel
           : selected
             ? String(selected[labelKey])
@@ -61,10 +72,10 @@ export function CustomDropdown<T>({
           {allowNone && (
             <li
               role="option"
-              aria-selected={value === null}
-              className={value === null ? "active" : ""}
+              aria-selected={value === noneState}
+              className={value === noneState ? "active" : ""}
               onClick={() => {
-                onChange(null);
+                onChange(noneState);
                 setOpen(false);
               }}
             >
@@ -72,14 +83,14 @@ export function CustomDropdown<T>({
             </li>
           )}
 
-          {options.map((opt, i) => (
+          {options.map((opt, _) => (
             <li
               key={String(opt[valueKey])}
               role="option"
               aria-selected={opt[valueKey] === value}
               className={value === opt[valueKey] ? "active" : ""}
               onClick={() => {
-                onChange(opt[valueKey] as number);
+                onChange(opt[valueKey] as number | null);
                 setOpen(false);
               }}
             >

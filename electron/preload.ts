@@ -5,7 +5,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   addList: (title: string, color: string) =>
     ipcRenderer.invoke("lists:add", title, color),
   deleteList: (id: number) => ipcRenderer.invoke("lists:remove", id),
-  getTasks: (listId: number) => ipcRenderer.invoke("tasks:get", listId),
+  getTasks: (filters?: any) => ipcRenderer.invoke("tasks:get", filters),
   addTask: (
     mainMode: boolean,
     title: string,

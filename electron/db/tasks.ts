@@ -1,5 +1,14 @@
 import { db } from "./index";
 
+export type TaskFilters = {
+  type?: boolean;
+  listId?: number | null;
+  status?: number;
+  priority?: number;
+  search?: string;
+  dueBefore?: number;
+};
+
 export const tableName = "tasks";
 
 export function initTable() {
@@ -39,8 +48,45 @@ export function initTable() {
   ).run();
 }
 
-export function getAll() {
-  return db.prepare("SELECT * FROM tasks ORDER BY title ASC").all();
+export function getAll(filter?: TaskFilters) {
+  let query = "SELECT * FROM tasks";
+  const conditions: string[] = [];
+  const params: any[] = [];
+
+  if (filter?.listId === null) {
+    conditions.push("list_id IS NULL");
+  } else if (filter?.listId !== undefined) {
+    conditions.push("list_id = ?");
+    params.push(filter.listId);
+  }
+
+  if (filter?.type !== undefined) {
+    conditions.push("main_mode = ?");
+    params.push(filter.type ? 1 : 0);
+  }
+
+  if (filter?.status !== undefined) {
+    conditions.push("status = ?");
+    params.push(filter.status);
+  }
+
+  if (filter?.priority !== undefined) {
+    conditions.push("priority = ?");
+    params.push(filter.priority);
+  }
+
+  if (filter?.dueBefore !== undefined) {
+    conditions.push("deadline_at <= ?");
+    params.push(filter.dueBefore);
+  }
+
+  if (conditions.length > 0) {
+    query += " WHERE " + conditions.join(" AND ");
+  }
+
+  // query += " ORDER BY title ASC";
+
+  return db.prepare(query).all(...params);
 }
 
 export function add(
