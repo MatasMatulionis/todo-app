@@ -6,8 +6,7 @@ import CreateTaskModal from "../Templates/CreateTask";
 import "./styles.scss";
 
 const Menu = () => {
-  const [openedCreateListModal, setOpenedCreateListModal] = useState(false);
-  const [openedCreateTaskModal, setOpenedCreateTaskModal] = useState(false);
+  const [openedPanel, setOpenedPanel] = useState<any>(null);
   const [lists, setLists] = useState<any[]>([]);
 
   useEffect(() => {
@@ -17,6 +16,10 @@ const Menu = () => {
   //List
   function getLists() {
     window.electronAPI.getLists().then(setLists);
+  }
+
+  function EditList(id: number, name: string, color: string) {
+    window.electronAPI.editList(id, name, color);
   }
 
   function CreateList(name: string, color: string) {
@@ -64,16 +67,13 @@ const Menu = () => {
     <aside>
       <div className="single-row-spaced-out">
         <h1>Todo.</h1>
-        {/* <button className="icon-button">
-          <Icon name="arrowLwL" />
-        </button> */}
       </div>
       <section className="task">
         <div className="single-row-spaced-out">
           <h2>TASKS</h2>
           <button
             className="icon-button small"
-            onClick={() => setOpenedCreateTaskModal(true)}
+            onClick={() => setOpenedPanel({ state: 1 })}
           >
             <Icon name="plus" />
           </button>
@@ -100,7 +100,7 @@ const Menu = () => {
           <h2>LISTS</h2>
           <button
             className="icon-button small"
-            onClick={() => setOpenedCreateListModal(true)}
+            onClick={() => setOpenedPanel({ state: 3 })}
           >
             <Icon name="plus" />
           </button>
@@ -108,6 +108,20 @@ const Menu = () => {
         {lists.map((list, index) => (
           <button className="item" key={index}>
             <p title={list.title}>{list.title}</p>
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenedPanel({
+                  state: 4,
+                  id: list.id,
+                  name: list.title,
+                  color: list.color,
+                });
+              }}
+              className="edit"
+            >
+              <Icon name="edit" />
+            </div>
             <div className="color" style={{ backgroundColor: list.color }} />
             {/* <button className="icon-button option margin-left">
               <Icon name="edit" />
@@ -121,18 +135,37 @@ const Menu = () => {
           </button>
         ))}
       </section>
-      {openedCreateListModal && (
+      {openedPanel?.state === 3 && (
         <CreateListModal
-          onClose={() => setOpenedCreateListModal(false)}
+          onClose={() => setOpenedPanel(null)}
           onCreate={(name, color) => {
-            setOpenedCreateListModal(false);
+            setOpenedPanel(null);
             CreateList(name, color);
           }}
         />
       )}
-      {openedCreateTaskModal && (
+      {openedPanel?.state === 4 && (
+        <CreateListModal
+          onClose={() => {
+            setOpenedPanel(null);
+          }}
+          onCreate={(name, color) => {
+            EditList(openedPanel.id, name, color);
+            getLists();
+            setOpenedPanel(null);
+          }}
+          onDelete={() => {
+            deleteList(openedPanel.id);
+            getLists();
+            setOpenedPanel(null);
+          }}
+          nameP={openedPanel.name}
+          colorP={openedPanel.color}
+        />
+      )}
+      {openedPanel?.state === 1 && (
         <CreateTaskModal
-          onClose={() => setOpenedCreateTaskModal(false)}
+          onClose={() => setOpenedPanel(null)}
           onCreate={(
             mainMode,
             title,
@@ -144,7 +177,7 @@ const Menu = () => {
             startedDay,
             deadlineDay,
           ) => {
-            setOpenedCreateTaskModal(false);
+            setOpenedPanel(null);
             CreateTask(
               mainMode,
               title,

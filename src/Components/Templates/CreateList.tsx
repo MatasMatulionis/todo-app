@@ -5,11 +5,21 @@ import "./create_list.scss";
 type Props = {
   onCreate: (name: string, color: string) => void;
   onClose: () => void;
+  onDelete?: () => void;
+  nameP?: string;
+  colorP?: string;
 };
 
-const CreateListModal = ({ onCreate, onClose }: Props) => {
-  const [name, setName] = useState("");
-  const [color, setColor] = useState("#ffffff");
+const CreateListModal = ({
+  onCreate,
+  onClose,
+  onDelete,
+  nameP,
+  colorP,
+}: Props) => {
+  const edited = nameP ? true : false;
+  const [name, setName] = useState(nameP ?? "");
+  const [color, setColor] = useState(colorP ?? "#ffffff");
   const [error, setError] = useState<string | null>(null);
 
   const [colorsGenerated, setColorsGenerated] = useState(() =>
@@ -58,7 +68,7 @@ const CreateListModal = ({ onCreate, onClose }: Props) => {
   return (
     <div className="backdrop create-list" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <h1>CREATE NEW LIST</h1>
+        <h1>{edited ? "EDITING LIST" : "CREATE NEW LIST"}</h1>
         <div>
           <div className="row">
             <h2>Title*</h2>
@@ -108,6 +118,7 @@ const CreateListModal = ({ onCreate, onClose }: Props) => {
             Regenerate
           </a>
         </div>
+
         <div className="row confirm-buttons">
           <button
             className="confirm"
@@ -115,10 +126,15 @@ const CreateListModal = ({ onCreate, onClose }: Props) => {
               name !== "" ? onCreate(name, color) : setError("Title is empty")
             }
           >
-            Create
+            {edited ? "Update" : "Create"}
           </button>
           <button onClick={onClose}>Cancel</button>
         </div>
+        {edited && (
+          <button className="delete" onClick={onDelete}>
+            Delete the List
+          </button>
+        )}
       </div>
     </div>
   );

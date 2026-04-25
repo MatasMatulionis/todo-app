@@ -10,6 +10,7 @@ interface ElectronAPI {
   //List
   getLists(): Promise<any[]>;
   addList(title: string, color: string): Promise<void>;
+  editList(id: number, title: string, color: string): Promise<void>;
   deleteList(id: number): Promise<void>;
   //Task
   getTasks(filters?: any): Promise<any[]>;
@@ -24,6 +25,7 @@ interface ElectronAPI {
     startedAt: number | null,
     deadlineAt: number | null,
   ): Promise<void>;
+  deleteTask(id: number): Promise<void>;
 }
 
 interface Window {

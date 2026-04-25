@@ -4,6 +4,8 @@ contextBridge.exposeInMainWorld("electronAPI", {
   getLists: () => ipcRenderer.invoke("lists:get"),
   addList: (title: string, color: string) =>
     ipcRenderer.invoke("lists:add", title, color),
+  editList: (id: number, title: string, color: string) =>
+    ipcRenderer.invoke("lists:edit", id, title, color),
   deleteList: (id: number) => ipcRenderer.invoke("lists:remove", id),
   getTasks: (filters?: any) => ipcRenderer.invoke("tasks:get", filters),
   addTask: (
@@ -29,4 +31,5 @@ contextBridge.exposeInMainWorld("electronAPI", {
       startedAt,
       deadlineAt,
     ),
+  deleteTask: (id: number) => ipcRenderer.invoke("tasks:remove", id),
 });

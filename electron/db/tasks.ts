@@ -42,7 +42,7 @@ export function initTable() {
     streak_period_times INTEGER,
     streak_goal INTEGER,
 
-    FOREIGN KEY (list_id) REFERENCES lists(id)
+    FOREIGN KEY (list_id) REFERENCES lists(id) ON DELETE SET NULL
 );
   `,
   ).run();
@@ -121,6 +121,10 @@ export function add(
     deadlineAt,
     Date.now(),
   );
+}
+
+export function edit(id: number) {
+  console.log("FUNCTION NOT MADE");
 }
 
 export function remove(id: number) {

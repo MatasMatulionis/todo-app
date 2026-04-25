@@ -7,6 +7,7 @@ type TableModule = {
   initTable(): void;
   getAll: (...args: any[]) => any[];
   add(...args: any[]): void;
+  edit(...args: any[]): void;
   remove(...args: any[]): void;
 };
 
@@ -22,6 +23,10 @@ export function initAllTablesAndIPC() {
 
     ipcMain.handle(`${table.tableName}:add`, (_, ...args: any[]) =>
       table.add(...args),
+    );
+
+    ipcMain.handle(`${table.tableName}:edit`, (_, ...args: any[]) =>
+      table.edit(...args),
     );
 
     ipcMain.handle(`${table.tableName}:remove`, (_, ...args: any[]) =>
