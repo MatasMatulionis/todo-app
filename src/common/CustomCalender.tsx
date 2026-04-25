@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from "react";
+import Icon from "./../common/Icon";
 
 import "./custom_calender.scss";
 
 type CustomCalenderProps<T> = {
   onCreate: (id: number | null) => void;
   date: number | null;
+  allowNull?: boolean;
 };
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -18,7 +20,11 @@ function getStartDay(year: number, month: number) {
   return day === 0 ? 6 : day - 1;
 }
 
-export function CustomCalender<T>({ onCreate, date }: CustomCalenderProps<T>) {
+export function CustomCalender<T>({
+  onCreate,
+  date,
+  allowNull = false,
+}: CustomCalenderProps<T>) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -82,9 +88,21 @@ export function CustomCalender<T>({ onCreate, date }: CustomCalenderProps<T>) {
 
   return (
     <div className="calendar-wrapper" ref={dropdownRef}>
-      <button className="calendar-trigger" onClick={() => setOpen((o) => !o)}>
-        {date !== null ? timeToString(date) : "Not set"}
-      </button>
+      <div className="calendar-trigger" onClick={() => setOpen((o) => !o)}>
+        <>{date !== null ? timeToString(date) : "Not set"}</>
+        {allowNull && date !== null && (
+          <button
+            className="nullify-date"
+            onClick={(e) => {
+              e.stopPropagation();
+              onCreate(null);
+              setOpen(false);
+            }}
+          >
+            <Icon name="cross" />
+          </button>
+        )}
+      </div>
 
       {open && (
         <div className="calendar">

@@ -63,6 +63,8 @@
 * {
   color: var(--black);
   user-select: none;
+
+  font-family: inherit;
 }
 
 body {
@@ -326,7 +328,6 @@ input[type="range"]:active::-webkit-slider-thumb {
   width: 100%;
   box-sizing: border-box;
   padding: var(--preferred-margin);
-  font-family: inherit;
   color: var(--black);
 
   background: var(--gray-1);

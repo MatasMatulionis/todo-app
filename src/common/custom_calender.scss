@@ -82,8 +82,10 @@
     }
   }
   .calendar-trigger {
+    position: relative;
     width: 100%;
     padding: 10px 12px;
+    box-sizing: border-box;
     background: var(--white);
     border: none;
     border-radius: var(--round-radius);
@@ -92,5 +94,27 @@
     color: var(--black);
     font-size: var(--medium-font-size);
     border: white 1px solid;
+    line-height: normal;
+  }
+
+  .nullify-date {
+    display: flex;
+    align-self: center;
+    position: absolute;
+    right: var(--preferred-margin);
+    top: 50%;
+    transform: translateY(-50%);
+    filter: brightness(0);
+
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+
+    transition-duration: var(--medium-transition);
+
+    &:hover > * {
+      transform: scale(1.2);
+    }
   }
 }

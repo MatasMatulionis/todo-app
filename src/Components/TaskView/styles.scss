@@ -11,6 +11,20 @@ main {
     margin: auto;
   }
 
+  .filter-row {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0px var(--preferred-margin);
+    padding: var(--preferred-margin) 0;
+
+    > * {
+      flex: 1 1 200px;
+      min-width: 150px;
+      max-width: 250px;
+    }
+  }
+
   .list-view {
     display: flex;
     flex-direction: column;

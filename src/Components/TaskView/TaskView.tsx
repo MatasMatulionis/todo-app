@@ -63,73 +63,76 @@ const TaskView = () => {
         <span className="text">Calender View</span>
         <div className="moving-bg"></div>
       </button>
-      <h2>Lists</h2>
-      <CustomDropdown
-        options={[{ id: null, title: "Show non List" }, ...lists]}
-        value={listId}
-        onChange={setListId}
-        onOpen={getLists}
-        valueKey="id"
-        labelKey="title"
-        allowNone={true}
-        noneLabel="Show All"
-        noneState={undefined}
-      />
-      <h2>Status</h2>
-      <CustomDropdown
-        options={STATUSES}
-        value={status}
-        onChange={setStatus}
-        valueKey="id"
-        labelKey="name"
-        allowNone={true}
-        noneLabel="Show All"
-        noneState={undefined}
-      />
-      <h2>Priority</h2>
-      <CustomDropdown
-        options={PRIORITY}
-        value={priority}
-        onChange={setPriority}
-        valueKey="id"
-        labelKey="name"
-        allowNone={true}
-        noneLabel="Show All"
-        noneState={undefined}
-      />
-      <h2>Starts At/After</h2>
-      <CustomCalender
-        onCreate={(date) => {
-          setStartDay(date === null ? undefined : date);
-        }}
-        date={startDay === undefined ? null : startDay}
-      />
-      <a
-        onClick={() => {
-          setStartDay(undefined);
-        }}
-      >
-        Reset
-      </a>
-      <h2>Due Before</h2>
-      <CustomCalender
-        onCreate={(date) => {
-          setDeadlineDay(date === null ? undefined : date);
-        }}
-        date={deadlineDay === undefined ? null : deadlineDay}
-      />
-      <a
-        onClick={() => {
-          setDeadlineDay(undefined);
-        }}
-      >
-        Reset
-      </a>
-      <div className="list-view">
-        {tasks.map((task, index) => (
-          <button key={index}>{task.title}</button>
-        ))}
-      </div>
+      <section className="filter-row">
+        <div>
+          <h2>Lists</h2>
+          <CustomDropdown
+            options={[{ id: null, title: "Show non List" }, ...lists]}
+            value={listId}
+            onChange={setListId}
+            onOpen={getLists}
+            valueKey="id"
+            labelKey="title"
+            allowNone={true}
+            noneLabel="Show All"
+            noneState={undefined}
+          />
+        </div>
+        <div>
+          <h2>Status</h2>
+          <CustomDropdown
+            options={STATUSES}
+            value={status}
+            onChange={setStatus}
+            valueKey="id"
+            labelKey="name"
+            allowNone={true}
+            noneLabel="Show All"
+            noneState={undefined}
+          />
+        </div>
+        <div>
+          <h2>Priority</h2>
+          <CustomDropdown
+            options={PRIORITY}
+            value={priority}
+            onChange={setPriority}
+            valueKey="id"
+            labelKey="name"
+            allowNone={true}
+            noneLabel="Show All"
+            noneState={undefined}
+          />
+        </div>
+        <div>
+          <h2>Starts At/After</h2>
+          <CustomCalender
+            onCreate={(date) => {
+              setStartDay(date === null ? undefined : date);
+            }}
+            date={startDay === undefined ? null : startDay}
+            allowNull={true}
+          />
+        </div>
+        <div>
+          <h2>Due Before</h2>
+          <CustomCalender
+            onCreate={(date) => {
+              setDeadlineDay(date === null ? undefined : date);
+            }}
+            date={deadlineDay === undefined ? null : deadlineDay}
+          />
+        </div>
+      </section>
+      {!calenderView ? (
+        <div className="list-view">
+          {tasks.map((task, index) => (
+            <button key={index}>{task.title}</button>
+          ))}
+        </div>
+      ) : (
+        <div className="calender-view"></div>
+      )}
     </main>
   );
 };

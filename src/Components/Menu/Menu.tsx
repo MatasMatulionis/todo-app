@@ -63,7 +63,7 @@ const Menu = () => {
   return (
     <aside>
       <div className="single-row-spaced-out">
-        <h1 onClick={() => getTasks()}>Todo.</h1>
+        <h1>Todo.</h1>
         {/* <button className="icon-button">
           <Icon name="arrowLwL" />
         </button> */}
